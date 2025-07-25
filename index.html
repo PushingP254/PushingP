@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PushingP WiFi Portal</title>
+    <style>
+        body { font-family: Arial; background: #f4faff; text-align: center; padding: 20px; }
+        header { background: #0077cc; color: white; padding: 20px; border-radius: 10px; }
+        img.logo { width: 120px; margin-bottom: 10px; }
+        .package { background: white; border: 2px solid #0077cc; border-radius: 10px; padding: 15px; margin: 10px auto; width: 300px; cursor: pointer; }
+        .package:hover { background-color: #0077cc; color: white; }
+        footer { margin-top: 20px; font-size: 0.8em; color: #777; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="PushingP Logo" class="logo">
+        <h1>Welcome to PushingP WiFi</h1>
+        <p>Select a package to get connected</p>
+    </header>
+    <div class="package" onclick="subscribe(5)">Unlimited 1hr @ Ksh. 5.00</div>
+    <div class="package" onclick="subscribe(10)">Unlimited 3hrs @ Ksh. 10.00</div>
+    <div class="package" onclick="subscribe(20)">Unlimited 12hrs @ Ksh. 20.00</div>
+    <div class="package" onclick="subscribe(150)">Weekly unlimited for Ksh. 150</div>
+    <div class="package" onclick="subscribe(280)">2 weeks unlimited for Ksh. 280</div>
+    <div class="package" onclick="subscribe(500)">Monthly Unlimited for Ksh. 500</div>
+    <footer><p>Powered by PushingP &copy; 2025</p></footer>
+
+    <script>
+        function getMAC() {
+            return prompt("Enter your MAC address (e.g. B4:F3:B0:34:A1:0A):");
+        }
+
+        function subscribe(amount) {
+            const mac = getMAC();
+            fetch("/pay", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: amount, mac: mac })
+            }).then(res => res.json())
+              .then(data => alert(data.message));
+        }
+    </script>
+</body>
+</html>
